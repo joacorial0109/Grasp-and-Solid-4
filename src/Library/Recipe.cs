@@ -1,9 +1,3 @@
-//-------------------------------------------------------------------------
-// <copyright file="Recipe.cs" company="Universidad Católica del Uruguay">
-// Copyright (c) Programación II. Derechos reservados.
-// </copyright>
-//-------------------------------------------------------------------------
-
 using System;
 using System.Collections.Generic;
 
@@ -25,31 +19,33 @@ namespace Full_GRASP_And_SOLID
             this.steps.Remove(step);
         }
 
-        // Agregado por SRP
+        // Método CreateStep para crear un nuevo paso
+        public Step CreateStep(Product input, double quantity, Equipment equipment, int time)
+        {
+            return new Step(input, quantity, equipment, time);
+        }
+
+        // Método GetTextToPrint para obtener la representación textual de la receta
         public string GetTextToPrint()
         {
             string result = $"Receta de {this.FinalProduct.Description}:\n";
             foreach (Step step in this.steps)
             {
-                result = result + step.GetTextToPrint() + "\n";
+                result += step.GetTextToPrint() + "\n";
             }
 
-            // Agregado por Expert
-            result = result + $"Costo de producción: {this.GetProductionCost()}";
-
+            result += $"Costo de producción: {this.GetProductionCost()}";
             return result;
         }
 
-        // Agregado por Expert
+        // Método para obtener el costo de producción de la receta
         public double GetProductionCost()
         {
             double result = 0;
-
             foreach (Step step in this.steps)
             {
-                result = result + step.GetStepCost();
+                result += step.GetStepCost();
             }
-
             return result;
         }
     }
